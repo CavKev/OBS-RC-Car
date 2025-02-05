@@ -1,5 +1,5 @@
 #include <Arduino.h>
-
+//here we define the pins
 #define LED_GREEN 23
 #define LED_RED 22
 #define LED_BLUE 21
