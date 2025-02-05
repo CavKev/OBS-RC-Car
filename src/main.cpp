@@ -1,8 +1,11 @@
 #include <Arduino.h>
+
 //here we define the pins
 #define LED_GREEN 23
 #define LED_RED 22
 #define LED_BLUE 21
+
+//here we define the functions
 void led_blink(int pin);
 void setup() {
   // put your setup code here, to run once:
