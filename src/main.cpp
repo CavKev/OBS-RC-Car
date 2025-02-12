@@ -1,47 +1,28 @@
 #include <Arduino.h>
 #include <ESP32Servo.h>
 
-//here we define the pins
-#define LED_GREEN 23
-#define LED_RED 22
-#define LED_BLUE 21
+//12V Motor
+#define PINPWM1 27
+#define PINPWM2 26
 
-//here we define the functions
-void led_blink(int pin);
+#define channel1 0  // 0 bis 15 PWM-Kanäle stehen zur Auswahl
+#define channel2 1  // 0 bis 15 PWM-Kanäle stehen zur Auswahl
+#define frequency 1000 
+#define resolution 8
+#define dutycycle (pow(2,resolution)-1) 
+enum Gear {REVERS, DRIVE, NUTRAL};
+Gear gear = NUTRAL;
+//ServoMotor
+#define SMOTOR 32
+Servo servo;
+enum Directions {RIGHT, LEFT, STRAIGHT};
+Directions direction = STRAIGHT;
+
 void setup() {
-  Serial.begin(115200);
   // put your setup code here, to run once:
-  pinMode (LED_GREEN, OUTPUT);
-  pinMode (LED_RED, OUTPUT);
-  pinMode (LED_BLUE, OUTPUT);
-  void led_blink(int pin);  
+  Serial.begin(115200);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  Serial.println("Blinking green LED");
-  led_blink(LED_GREEN);
-  Serial.println("Blinking red LED");
-  led_blink(LED_RED);
-  Serial.println("Blinking blue LED");
-  led_blink(LED_BLUE); 
-}
-
-/**
- * @brief Blinks an LED connected to the specified pin.
- *
- * This function sets the specified pin to HIGH for 500 milliseconds, 
- * then sets it to LOW for 500 milliseconds, creating a blinking effect. 
- * It assumes the pin has been configured as an OUTPUT.
- *
- * @param pin The pin number connected to the LED.
- */
-
-void led_blink(int pin) {
-  Serial.print("Blinking LED connected to pin ");
-  Serial.println(pin);
-  digitalWrite(pin, HIGH);
-  delay(500);
-  digitalWrite(pin, LOW);
-  delay(500);
+  // put your main code here, to run repeatedly: 
 }
