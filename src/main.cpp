@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <ESP32Servo.h>
 
 //here we define the pins
 #define LED_GREEN 23
