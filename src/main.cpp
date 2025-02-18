@@ -10,6 +10,7 @@
 #define frequency 1000 
 #define resolution 8
 #define dutycycle (pow(2,resolution)-1) 
+
 enum Gear {REVERS, DRIVE, NUTRAL};
 Gear gear = NUTRAL;
 //ServoMotor
