@@ -49,6 +49,27 @@ servo.attach(SMOTOR);
 servo.write(90);
 }
 
+/**
+ * Main loop to control the motor direction based on the current gear setting.
+ * 
+ * This function is called repeatedly and checks the current gear state:
+ * - If the gear is set to DRIVE, it writes the duty cycle to channel1 for forward motion.
+ * - If the gear is set to REVERS, it writes the duty cycle to channel2 for reverse motion.
+ * - If the gear is set to NUTRAL, no action is taken.
+ */
+
 void loop() {
   // put your main code here, to run repeatedly: 
+  switch(gear) {
+    case DRIVE:
+      ledcWrite(channel1,dutycycle);
+    break;
+    case REVERS:
+      ledcWrite(channel2,dutycycle);
+    break;
+    case NUTRAL:
+    break;
+   }
+
+   
 }
