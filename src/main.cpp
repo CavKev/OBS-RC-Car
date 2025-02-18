@@ -20,7 +20,32 @@ Directions direction = STRAIGHT;
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(115200);
+  Serial.begin(115200); // set up a serial connection
+
+  // Set the PWM pin for channel 1 as an output
+  pinMode(PINPWM1, OUTPUT);
+  // Configure PWM settings for channel 1
+  ledcSetup(channel1, frequency, resolution);
+  // Attach PWM channel 1 to the specified pin
+  ledcAttachPin(PINPWM1, channel1);
+
+  // Set the PWM pin for channel 2 as an output
+  pinMode(PINPWM2, OUTPUT);
+  // Configure PWM settings for channel 2
+  ledcSetup(channel2, frequency, resolution);
+  // Attach PWM channel 2 to the specified pin
+  ledcAttachPin(PINPWM2, channel2);
+
+
+//Servomotor
+// Set the servo motor pin mode to output
+pinMode(SMOTOR, OUTPUT);
+
+// Attach the servo motor to the specified pin
+servo.attach(SMOTOR);
+
+// Set the initial position of the servo motor to 90 degrees
+servo.write(90);
 }
 
 void loop() {
