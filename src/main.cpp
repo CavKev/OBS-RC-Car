@@ -1,5 +1,58 @@
 #include <Arduino.h>
+
+//Servo
 #include <ESP32Servo.h>
+
+//Webserver
+#include <WiFi.h>
+#include <DNSServer.h>
+#include <AsyncTCP.h>
+#include "ESPAsyncWebServer.h"
+
+DNSServer dnsServer;
+AsyncWebServer server(80);
+
+class CaptiveRequestHandler : public AsyncWebHandler {
+  public:
+    CaptiveRequestHandler() {}
+    virtual ~CaptiveRequestHandler() {}
+  
+    /**
+     * Determines if this handler should handle the given request.
+     * By default, this will return true for all requests and handle them.
+     * If you want to handle only specific requests, override this and return false
+     * for those that should not be handled.
+     * @param request the request to check
+     * @return true if the request should be handled, false otherwise
+     */
+    bool canHandle(AsyncWebServerRequest *request){
+      //request->addInterestingHeader("ANY");
+      return true;
+    }
+  
+/*************  ✨ Codeium Command ⭐  *************/
+    /**
+     * Handles incoming web server requests and responds with a captive portal page.
+     * 
+     * This method creates an HTML response stream that presents a simple web page,
+     * informing the user that they have reached the captive portal. It includes the
+     * original URL the user attempted to reach and provides a link to the network's
+     * access point.
+     * 
+     * @param request The incoming web request to be handled.
+     */
+
+/******  6150e7a6-bbf1-4a91-b17e-0346f578afdd  *******/
+    void handleRequest(AsyncWebServerRequest *request) {
+      AsyncResponseStream *response = request->beginResponseStream("text/html");
+      response->print("<!DOCTYPE html><html><head><title>Captive Portal</title></head><body>");
+      response->print("<p>This is out captive portal front page.</p>");
+      response->printf("<p>You were trying to reach: http://%s%s</p>", request->host().c_str(), request->url().c_str());
+      response->printf("<p>Try opening <a href='http://%s'>this link</a> instead</p>", WiFi.softAPIP().toString().c_str());
+      response->print("</body></html>");
+      request->send(response);
+    }
+  };
 
 //12V Motor
 #define PINPWM1 27
@@ -22,6 +75,13 @@ Directions direction = STRAIGHT;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200); // set up a serial connection
+
+  //Webserver
+  WiFi.softAP("esp-captive");
+  dnsServer.start(53, "*", WiFi.softAPIP());
+  server.addHandler(new CaptiveRequestHandler()).setFilter(ON_AP_FILTER);//only when requested from AP
+  //more handlers...
+  server.begin();
 
   // Set the PWM pin for channel 1 as an output
   pinMode(PINPWM1, OUTPUT);
@@ -60,6 +120,10 @@ servo.write(90);
 
 void loop() {
   // put your main code here, to run repeatedly: 
+  //Webserver
+  dnsServer.processNextRequest();
+
+  //Fahren mit Servo
   switch(gear) {
     case DRIVE:
       ledcWrite(channel1,dutycycle);
