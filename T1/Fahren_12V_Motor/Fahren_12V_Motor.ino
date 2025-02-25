@@ -1,3 +1,5 @@
+#include <ESP32Servo.h>
+
 #define PINPWM1 27
 #define PINPWM2 26
 
