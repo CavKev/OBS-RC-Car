@@ -6,7 +6,7 @@
 //Webserver
 #include <WiFi.h>
 #include <AsyncTCP.h>
-#include <ESPAsyncWebServer.h>
+#include <WebServer.h>
 
 //ServoMotor
 #define SMOTOR 32
@@ -22,7 +22,7 @@ Directions direction = STRAIGHT;
 #define TYPE_TEXT "text/plain"
 #define TYPE_HTML "text/html"
 
-AsyncWebServer server(80);
+WebServer server(80);
 
 IPAddress local_ip(192, 168, 0, 1);
 IPAddress gateway(192, 168, 0, 1);
@@ -32,29 +32,17 @@ const char* ssid = "RC-Car-Porsche";
 const char* password = "Porsche911";
 const char* PARAM_MESSAGE = "message";
 
-void notFound(AsyncWebServerRequest *request) {
-  request->send(404, "text/plain", "Not found");
-}
+//allMethods
+void setdirection(Directions directionf);
+void handle_root();
+void send_not_found();
+String sendHTML();
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  WiFi.softAP(ssid, password);
-	WiFi.softAPConfig(local_ip, gateway, subnet);
-
-  if (WiFi.waitForConnectResult() != WL_CONNECTED) {
-      Serial.printf("WiFi Failed!\n");
-      return;
-  }
-
-  Serial.print("IP Address: ");
-  Serial.println(WiFi.localIP());
-
-  server.on("/", handle_root);
-
-  server.onNotFound(notFound);
-
-  server.begin();
+  
+  
 
 
 
@@ -66,11 +54,20 @@ void setup() {
 
   // Set the initial position of the servo motor to 90 degrees
   servo.write(90);
+
+  // Webserver
+  WiFi.softAP(ssid, password);
+	WiFi.softAPConfig(local_ip, gateway, subnet);
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
+
+  server.on("/", handle_root);
+  server.onNotFound(send_not_found);
+  server.begin();
 }
 
 void loop() {
   // put your main code here, to run repeatedly: 
-
   //Fahren mit Servo
   switch(direction) {
     case RIGHT:
@@ -88,8 +85,13 @@ void setdirection(Directions directionf) {
   direction = directionf;
 }
 
+//Webserver
 void handle_root() {
   server.send(HTTP_OKAY, TYPE_HTML, sendHTML());
+}
+
+void send_not_found() {
+	server.send(HTTP_NOT_FOUND, TYPE_TEXT, "not found");
 }
 
 String sendHTML() {
