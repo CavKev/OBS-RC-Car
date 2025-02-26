@@ -5,79 +5,60 @@
 
 //Webserver
 #include <WiFi.h>
-#include <DNSServer.h>
 #include <AsyncTCP.h>
-#include "ESPAsyncWebServer.h"
+#include <ESPAsyncWebServer.h>
 
-DNSServer dnsServer;
-AsyncWebServer server(80);
-
-class CaptiveRequestHandler : public AsyncWebHandler {
-  public:
-    CaptiveRequestHandler() {}
-    virtual ~CaptiveRequestHandler() {}
-  
-    /**
-     * Determines if this handler should handle the given request.
-     * By default, this will return true for all requests and handle them.
-     * If you want to handle only specific requests, override this and return false
-     * for those that should not be handled.
-     * @param request the request to check
-     * @return true if the request should be handled, false otherwise
-     */
-    bool canHandle(AsyncWebServerRequest *request){
-      //request->addInterestingHeader("ANY");
-      return true;
-    }
-  
-    void handleRequest(AsyncWebServerRequest *request) {
-      AsyncResponseStream *response = request->beginResponseStream("text/html");
-      response->print("<!DOCTYPE html><html><head><title>Captive Portal</title></head><body>");
-      response->print("<p>This is out captive portal front page.</p>");
-      response->printf("<p>You were trying to reach: http://%s%s</p>", request->host().c_str(), request->url().c_str());
-      response->printf("<p>Try opening <a href='http://%s'>this link</a> instead</p>", WiFi.softAPIP().toString().c_str());
-      response->printf("<html><body><button onclick=\"location.href='/setdirection?direction=RIGHT'\">Rechts</button></body></html>");
-      request->send(response);
-    }
-    
-    // Add a new handler for the /setdirection request
-    void handleSetDirection(AsyncWebServerRequest *request) {
-      String direction = request->getParam("direction")->value();
-      if (direction == "RIGHT") {
-        setdirection(RIGHT);
-      } else if (direction == "LEFT") {
-        setdirection(LEFT);
-      } else if (direction == "STRAIGHT") {
-        setdirection(STRAIGHT);
-      }
-      request->send(200, "text/plain", "Direction set");
-    }
-    
-    // Add the new handler to the server
-    server.addHandler(new AsyncCallbackWebHandler("/setdirection", [](AsyncWebServerRequest *request) {
-      handleSetDirection(request);
-    }));
-  };
-
+//ServoMotor
 #define SMOTOR 32
 Servo servo;
 enum Directions {RIGHT, LEFT, STRAIGHT};
 Directions direction = STRAIGHT;
 
+//server
+#define HTTP_OKAY 200
+#define HTTP_BAD_REQUEST 400
+#define HTTP_NOT_FOUND 404
+
+#define TYPE_TEXT "text/plain"
+#define TYPE_HTML "text/html"
+
+AsyncWebServer server(80);
+
+IPAddress local_ip(192, 168, 0, 1);
+IPAddress gateway(192, 168, 0, 1);
+IPAddress subnet(255, 255, 255, 0);
+
+const char* ssid = "RC-Car-Porsche";
+const char* password = "Porsche911";
+const char* PARAM_MESSAGE = "message";
+
+void notFound(AsyncWebServerRequest *request) {
+  request->send(404, "text/plain", "Not found");
+}
+
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(115200); // set up a serial connection
+  Serial.begin(115200);
+  WiFi.softAP(ssid, password);
+	WiFi.softAPConfig(local_ip, gateway, subnet);
 
-  //Webserver
-  WiFi.softAP("esp-captive");
-  dnsServer.start(53, "*", WiFi.softAPIP());
-  server.addHandler(new CaptiveRequestHandler()).setFilter(ON_AP_FILTER);//only when requested from AP
-  //more handlers...
+  if (WiFi.waitForConnectResult() != WL_CONNECTED) {
+      Serial.printf("WiFi Failed!\n");
+      return;
+  }
+
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
+
+  server.on("/", handle_root);
+
+  server.onNotFound(notFound);
+
   server.begin();
 
 
+
   //Servomotor
-  // Set the servo motor pin mode to output
   pinMode(SMOTOR, OUTPUT);
 
   // Attach the servo motor to the specified pin
@@ -87,22 +68,8 @@ void setup() {
   servo.write(90);
 }
 
-/**
- * Main loop to control the motor direction based on the current gear setting.
- * 
- * This function is called repeatedly and checks the current gear state:
- * - If the gear is set to DRIVE, it writes the duty cycle to channel1 for forward motion.
- * - If the gear is set to REVERS, it writes the duty cycle to channel2 for reverse motion.
- * - If the gear is set to NUTRAL, no action is taken.
- */
-void setdirection(Directions directionf) {
-  direction = directionf;
-}
-
 void loop() {
   // put your main code here, to run repeatedly: 
-  //Webserver
-  dnsServer.processNextRequest();
 
   //Fahren mit Servo
   switch(direction) {
@@ -116,6 +83,15 @@ void loop() {
       servo.write(90);
       break;
   }
+}
+void setdirection(Directions directionf) {
+  direction = directionf;
+}
 
-   
+void handle_root() {
+  server.send(HTTP_OKAY, TYPE_HTML, sendHTML());
+}
+
+String sendHTML() {
+	return "<!DOCTYPE html><html><head><meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no'><title>ESP32 T1</title><style>html{margin:0px auto; text-align:center;background-color:#000;color:#FFF}.button{min-width:40px; background-color:#000; border:#FF4500 solid 1px; border-radius:4px; padding:13px 30px; font-size:25px; cursor:pointer; transition:background-color 0.2s,color 0.2s;}.button:hover{background-color:#FF4500; color:#000;}.grid{display:grid; row-gap:40px;}.wide-grid{grid-template-columns:auto auto auto; max-width:450px;}.small-grid{grid-template-columns:auto auto; max-width:300px;}.centered{margin:auto; margin-top:20px;}p{margin:0px;}span,p{font-size:30px;}h2{margin-top:60px; margin-bottom:0px;}</style><script>function getRequest(to,target){let req=new XMLHttpRequest();req.open('GET',to,false);req.send(null);if(target!=null){document.getElementById(target).innerHTML=req.responseText;}}</script></head><body><h1>ESP32 T1 control</h1><h2>Lights</h2><div class='centered grid small-grid'><div><span class='button' onclick='getRequest(\"/lights?where=front\",\"lights-front\")'>front</span></div><span id='lights-front'>false</span><div><span class='button' onclick='getRequest(\"/lights?where=back\",\"lights-back\")'>back</span></div><span id='lights-back'>false</span></div><h2>Steering</h1><div><p id='steer'>90</p><div class='centered grid wide-grid'><div><span class='button' onclick='getRequest(\"/steering?angle=30\",\"steer\")'>left</span></div><div><span class='button' onclick='getRequest(\"/steering?angle=0\",\"steer\")'>straight</span></div><div><span class='button' onclick='getRequest(\"/steering?angle=-30\",\"steer\")'>right</span></div></div></div><h2>Motor</h2><div><p id='speed'>0</p><div class='centered grid wide-grid'><div><span class='button' onclick='getRequest(\"/motor?speed=100\",\"speed\")'>forward</span></div><div><span class='button' onclick='getRequest(\"/motor?speed=0\",\"speed\")'>stop</span></div><div><span class='button' onclick='getRequest(\"/motor?speed=-100\",\"speed\")'>backward</span></div></div></div><h2>Autodrive</h2><div><p id=\"autodrive\">false</p><div class='centered'><div><span class='button' onclick='getRequest(\"/toggle_autodrive\", \"autodrive\")'>toggle autodrive</span></div><div></div></body></html>";
 }
