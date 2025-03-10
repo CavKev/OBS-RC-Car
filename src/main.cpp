@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <ESP32Servo.h>
 
-//12V Motor
+//12V Motor test
 #define PINPWM1 27
 #define PINPWM2 26
 
