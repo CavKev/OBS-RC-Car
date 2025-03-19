@@ -1,0 +1,218 @@
+body{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+    
+    
+    background-color: #000;
+}
+
+
+.main{
+    display: flex;
+    grid-template-columns: repeat(3, 60px);
+    grid-template-rows: repeat(3, 60px);
+    gap: 10px;
+    justify-content: space-between;
+    flex-direction: column;
+   
+    
+    
+}
+.container2{
+    display: flex;
+    grid-template-columns: repeat(3, 60px);
+    grid-template-rows: repeat(3, 60px);
+    gap: 10px;
+    justify-content: space-between;
+    flex-direction: row;
+   
+    
+    
+}
+
+
+.container{
+    
+    display: flex;
+    grid-template-columns: repeat(3, 60px);
+    grid-template-rows: repeat(3, 60px);
+    gap: 10px;
+    justify-content: space-between;
+    flex-direction: row;
+   
+    
+    
+   
+    
+}
+.leftMore{
+    color: rgb(212, 19, 180);
+}
+.rightMore{
+    color: rgb(212, 19, 180);
+}
+
+.up{
+    grid-column: 2;
+    grid-row: 1;
+    color: rgb(212, 19, 180);
+    
+    
+}
+.left{
+    grid-column: 1;
+    grid-row: 2;
+    color: rgb(212, 19, 180);
+   
+    
+}
+.stop{
+    grid-column: 2;
+    grid-row: 2;
+    color: red;
+   
+    
+    
+    
+}
+.right{
+    grid-column: 3;
+    grid-row: 2;
+    color: rgb(212, 19, 180);
+   
+    
+}
+.down{
+    grid-column: 2;
+    grid-row: 3;
+    color: rgb(212, 19, 180);
+    
+    
+}
+
+
+button{
+   
+    position: relative;
+  padding: 50px;
+   
+    text-transform: uppercase;
+ 
+    
+    font-size: 50px;
+    font-weight: bold;
+    transition: .5s;
+    
+
+}
+.stop:hover{
+    background-color: red;
+}
+button:hover{
+    background-color: rgb(212, 19, 180);
+    color: #050801;
+    box-shadow: 0 0 5px rgb(212, 19, 180),
+                0 0 25px rgb(212, 19, 180)
+                0 0 50px rgb(212, 19, 180);
+                -webkit-box-reflect: below 0 linear-gradient(transparent, #0005);
+}
+
+button:first-child{
+    filter: hue-rotate(rgb(212, 19, 180));
+}
+
+button:last-child{
+    filter: hue-rotate(rgb(212, 19, 180));
+}
+button span{
+    position: absolute;
+    display: block;
+}
+
+button span:nth-child(1) {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(rgb(212, 19, 180), transparent, rgb(212, 19, 180));
+    animation: animate1 1s infinite;
+}
+
+@keyframes animate1 {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+button span:nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, rgb(212, 19, 180));
+    animation: animate2 1s infinite;
+    animation-delay: .25s;
+}
+
+@keyframes animate2 {
+    0% {
+        top: -100%;
+    }
+    100% {
+        top: 100%;
+    }
+}
+
+button span:nth-child(3) {
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(270deg, transparent, rgb(212, 19, 180));
+    animation: animate3 1s infinite;
+    animation-delay: .5s;
+}
+
+@keyframes animate3 {
+    0% {
+        right: -100%;
+    }
+    100% {
+        right: 100%;
+    }
+}
+
+button span:nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, rgb(212, 19, 180));
+    animation: animate4 1s infinite;
+    animation-delay: .75s;
+}
+
+@keyframes animate4 {
+    0% {
+        bottom: -100%;
+    }
+    100% {
+        bottom: 100%;
+    }
+}
+ 
+
+
+
+
+
+
+
+
