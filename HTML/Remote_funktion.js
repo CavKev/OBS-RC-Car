@@ -204,7 +204,56 @@
 
 
 
-const controlButtons = document.querySelectorAll('#Nach_vorne, #Rückwärts, #Nach_links, #Nach_rechts');
+
+
+
+
+
+
+// const controlButtons = document.querySelectorAll('#Nach_vorne, #Rückwärts, #Nach_links, #Nach_rechts');
+// const segmentsOrder = [
+//     'segment10', 'segment9', 'segment8', 'segment7', 'segment6',
+//     'segment5', 'segment4', 'segment3', 'segment2', 'segment1'
+// ];
+// const segmentsEffects = [
+//     'segment1010', 'segment99', 'segment88', 'segment77', 'segment66',
+//     'segment55', 'segment44', 'segment33', 'segment22', 'segment11'
+// ];
+// let currentLevel = 0;
+// controlButtons.forEach(button => {
+//     button.addEventListener('click', () => {
+//         if (currentLevel >= segmentsOrder.length) return;
+//         const className = segmentsOrder[currentLevel];
+//         const effectClass = segmentsEffects[currentLevel];
+//         const segments = document.querySelectorAll(`.thermo-segment.${className}`);
+//         segments.forEach(seg => seg.classList.add(effectClass));
+//         setTimeout(() => {
+//             segments.forEach(seg => seg.classList.remove(effectClass));
+//             // Auto-reset when last level is reached
+//             if (currentLevel === segmentsOrder.length - 1) {
+//                 segmentsOrder.forEach((cls, i) => {
+//                     document.querySelectorAll(`.thermo-segment.${cls}`).forEach(el =>
+//                         el.classList.remove(segmentsEffects[i])
+//                     );
+//                 });
+//                 currentLevel = 0;
+//             } else {
+//                 currentLevel++;
+//             }
+//         }, 3000);
+//     });
+// });
+
+
+
+
+
+
+
+const controlButtons = document.querySelectorAll('#Nach_vorne, #Nach_links, #Nach_rechts');
+const rückwärtsBtn = document.getElementById("Rückwärts");
+const stopBtn = document.getElementById("stop_btn");
+
 const segmentsOrder = [
     'segment10', 'segment9', 'segment8', 'segment7', 'segment6',
     'segment5', 'segment4', 'segment3', 'segment2', 'segment1'
@@ -213,7 +262,10 @@ const segmentsEffects = [
     'segment1010', 'segment99', 'segment88', 'segment77', 'segment66',
     'segment55', 'segment44', 'segment33', 'segment22', 'segment11'
 ];
+
 let currentLevel = 0;
+
+// FORWARD / LEFT / RIGHT
 controlButtons.forEach(button => {
     button.addEventListener('click', () => {
         if (currentLevel >= segmentsOrder.length) return;
@@ -221,25 +273,39 @@ controlButtons.forEach(button => {
         const effectClass = segmentsEffects[currentLevel];
         const segments = document.querySelectorAll(`.thermo-segment.${className}`);
         segments.forEach(seg => seg.classList.add(effectClass));
-        setTimeout(() => {
-            segments.forEach(seg => seg.classList.remove(effectClass));
-            // Auto-reset when last level is reached
-            if (currentLevel === segmentsOrder.length - 1) {
-                segmentsOrder.forEach((cls, i) => {
-                    document.querySelectorAll(`.thermo-segment.${cls}`).forEach(el =>
-                        el.classList.remove(segmentsEffects[i])
-                    );
-                });
-                currentLevel = 0;
-            } else {
-                currentLevel++;
-            }
-        }, 3000);
+        currentLevel++;
     });
+});
+
+// RÜCKWÄRTS BUTTON
+rückwärtsBtn.addEventListener("click", () => {
+    if (currentLevel <= 0) return;
+    currentLevel--;
+    const className = segmentsOrder[currentLevel];
+    const effectClass = segmentsEffects[currentLevel];
+    const segments = document.querySelectorAll(`.thermo-segment.${className}`);
+    segments.forEach(seg => seg.classList.remove(effectClass));
+});
+
+// STOP BUTTON - RESET EVERYTHING
+stopBtn.addEventListener("click", () => {
+    segmentsOrder.forEach((cls, i) => {
+        document.querySelectorAll(`.thermo-segment.${cls}`).forEach(el =>
+            el.classList.remove(segmentsEffects[i])
+        );
+    });
+    currentLevel = 0;
 });
 
 
 
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 // const controlButtonIds = ["Nach_vorne", "Rückwärts", "Nach_links", "Nach_rechts"];
 // const segmentsOrder = [
 //     "segment10", "segment9", "segment8", "segment7", "segment6",
@@ -266,8 +332,7 @@ controlButtons.forEach(button => {
 //         currentLevel++;
 //     });
 // });
-
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // button.addEventListener("click", () => {
