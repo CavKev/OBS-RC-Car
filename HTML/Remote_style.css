@@ -85,6 +85,16 @@ border-radius: 10px;
 .segment88 { background-color: #ffdd00; width: 30%; box-shadow: 10px 15px 40px #ffdd00;}
 .segment99 { background-color: #ffff66; width: 20%; box-shadow: 10px 15px 40px #ffff66;}
 .segment1010{ background-color: #ffffff; width: 10%; box-shadow: 10px 15px 40px #ffffff;}
+
+.segment99- { background-color: #e0f7fa; width: 20%; box-shadow: 10px 15px 40px #00c6ff;}
+.segment88- { background-color: #a1c4fd; width: 30%; box-shadow: 10px 15px 40px #a1c4fd;}
+.segment77- { background-color: #89f7fe; width: 40%; box-shadow: 10px 15px 40px #89f7fe;}
+.segment66- { background-color: #00b4db; width: 50%; box-shadow: 10px 15px 40px #00b4db;}
+.segment55- { background-color: #6080eb; width: 60%; box-shadow: 10px 15px 40px #6080eb;}
+.segment44- { background-color: #067bdb; width: 70%; box-shadow: 10px 15px 40px #067bdb;}
+.segment33- { background-color: #046bc0; width: 80%; box-shadow: 10px 15px 40px #046bc0;}
+.segment22- { background-color: #396afc; width: 90%; box-shadow: 10px 15px 40px #396afc;}
+.segment11- { background-color: #2c3e50;  box-shadow: 10px 15px 40px #2c3e50;}
 .SRemow{
 background-color: black; width: 10%; box-shadow: 0px 0px 0px #000;
 }
@@ -146,3 +156,45 @@ outline: 3px solid white;
 box-shadow: 0 0 25px 10px white;
 transition: all 0.3s ease-in-out;
 }
+
+
+
+
+
+
+/* Phones (<= 600px) */
+@media (max-width: 600px) {
+  .layout-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  button {
+    width: 100%;
+    font-size: 1.2rem;
+  }
+
+  .thermometer {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* Tablets (600px–1024px) */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .layout-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .thermometer {
+    width: 45%;
+    height: auto;
+  }
+
+  button {
+    width: 40%;
+  }
+}
+
+/* Desktops (>= 1025px) — your default layout is already fine */
