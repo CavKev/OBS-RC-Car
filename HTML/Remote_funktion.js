@@ -8,8 +8,10 @@ document.getElementById("logo").addEventListener("click", function () {
     overlay.style.height = "100vh";
     overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
     overlay.style.zIndex = 9999;
+    overlay.style.opacity = "0";
+    overlay.style.transition = "opacity 0.5s ease";
 
-    // Create container for top alert
+    // Alert container
     const alertContainer = document.createElement("div");
     alertContainer.style.position = "absolute";
     alertContainer.style.top = "20px";
@@ -23,60 +25,90 @@ document.getElementById("logo").addEventListener("click", function () {
     alertContainer.style.flexDirection = "column";
     alertContainer.style.alignItems = "center";
     alertContainer.style.gap = "10px";
-    const imagDiv = document.createElement("div")
-    imagDiv.style.flexDirection = "column";
-    // Create image1
-    const img = document.createElement("img");
-    img.src = "images/1719500998243.jpg"; // Replace with your desired image path
-    img.style.width = "150px";
-    img.style.height = "150px";
-    img.style.borderRadius = "50%";
-    img.style.border = "4px solid white";
-    img.style.boxShadow = "0 0 15px yellow";
-    // img.style.display = ""
-    // Create image2
-    const img2 = document.createElement("img");
-    img2.src = "images/20200618_164608.jpg"; // Replace with your desired image path
-    img2.style.width = "150px";
-    img2.style.height = "150px";
-    img2.style.borderRadius = "50%";
-    img2.style.border = "4px solid white";
-    img2.style.boxShadow = "0 0 15px yellow";
-    // Create image3
-    const img3 = document.createElement("img");
-    img3.src = "images/IMG_20250527_125450.jpg"; // Replace with your desired image path
-    img3.style.width = "150px";
-    img3.style.height = "150px";
-    img3.style.borderRadius = "50%";
-    img3.style.border = "4px solid white";
-    img3.style.boxShadow = "0 0 15px yellow";
+    alertContainer.style.maxWidth = "90vw";
 
-    //Added developer's names
+    // Developer heading
     const text = document.createElement("h3");
-    text.innerText = 'This project was developed by developers'
+    text.innerText = 'This project was developed by developers';
     text.style.color = '#ffffff';
-    // Optional: close button
+    text.style.textAlign = "center";
+    alertContainer.appendChild(text);
+
+    // Container for profiles
+    const imagDiv = document.createElement("div");
+    imagDiv.style.display = "flex";
+    imagDiv.style.flexWrap = "wrap";
+    imagDiv.style.justifyContent = "center";
+    imagDiv.style.gap = "20px";
+
+    // Function to create each profile
+    function createProfile(src, nameText) {
+        const wrapper = document.createElement("div");
+        wrapper.style.display = "flex";
+        wrapper.style.flexDirection = "column";
+        wrapper.style.alignItems = "center";
+
+        const img = document.createElement("img");
+        img.src = src;
+        img.style.width = "150px";
+        img.style.height = "150px";
+        img.style.borderRadius = "50%";
+        img.style.border = "4px solid white";
+        img.style.boxShadow = "0 0 15px yellow";
+        img.style.margin = "10px";
+        img.style.transition = "transform 0.3s, box-shadow 0.3s";
+
+        img.addEventListener("mouseenter", () => {
+            img.style.transform = "scale(1.05)";
+            img.style.boxShadow = "0 0 25px orange";
+        });
+        img.addEventListener("mouseleave", () => {
+            img.style.transform = "scale(1)";
+            img.style.boxShadow = "0 0 15px yellow";
+        });
+
+        const name = document.createElement("h3");
+        name.innerText = nameText;
+        name.style.color = '#ffffff';
+        name.style.marginTop = "5px";
+
+        wrapper.appendChild(img);
+        wrapper.appendChild(name);
+        return wrapper;
+    }
+
+    // Add developer profiles
+    imagDiv.appendChild(createProfile("images/1719500998243.jpg", "Kevin"));
+    imagDiv.appendChild(createProfile("images/20200618_164608.jpg", "Mohammed"));
+    imagDiv.appendChild(createProfile("images/IMG_20250527_125450.jpg", "Justus"));
+    alertContainer.appendChild(imagDiv);
+
+    // Close button
     const closeBtn = document.createElement("button");
     closeBtn.textContent = "Close";
-    closeBtn.style.marginTop = "10px";
+    closeBtn.style.marginTop = "20px";
     closeBtn.style.padding = "10px 20px";
     closeBtn.style.borderRadius = "10px";
     closeBtn.style.background = "red";
     closeBtn.style.color = "white";
     closeBtn.style.cursor = "pointer";
     closeBtn.style.border = "none";
-    closeBtn.addEventListener("click", () => overlay.remove());
+    closeBtn.addEventListener("click", () => {
+        overlay.style.opacity = "0";
+        setTimeout(() => overlay.remove(), 500);
+    });
 
-    // Assemble
-    alertContainer.appendChild(text);
-    alertContainer.appendChild(imagDiv);
-    imagDiv.appendChild(img);
-    imagDiv.appendChild(img2);
-    imagDiv.appendChild(img3);
     alertContainer.appendChild(closeBtn);
     overlay.appendChild(alertContainer);
     document.body.appendChild(overlay);
+
+    // Trigger fade-in after append
+    requestAnimationFrame(() => {
+        overlay.style.opacity = "1";
+    });
 });
+
+
 
 
 
