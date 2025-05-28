@@ -92,24 +92,24 @@ border-radius: 10px;
 
 
 /* .speed_indicator1 { background-color: #330000; box-shadow: 10px 15px 40px #330000;} */
-.speed_indicator2 { background-color: #661100; box-shadow: 8px 3px 15px #661100; transform: rotate(302deg);}
-.speed_indicator3 { background-color: #993300; box-shadow: 8px 3px 15px #993300; transform: rotate(287deg);}
-.speed_indicator4 { background-color: #cc4400; box-shadow: 8px 3px 15px #cc4400; transform: rotate(272deg);}
-.speed_indicator5 { background-color: #ff5500; box-shadow: 8px 3px 15px #ff5500; transform: rotate(257deg);}
-.speed_indicator6 { background-color: #ff7700; box-shadow: 8px 3px 15px #ff7700; transform: rotate(242deg);}
-.speed_indicator7 { background-color: #ffaa00; box-shadow: 8px 3px 15px #ffaa00; transform: rotate(226deg);}
-.speed_indicator8 { background-color: #ffdd00; box-shadow: 8px 3px 15px #ffdd00; transform: rotate(210deg);}
-.speed_indicator9 { background-color: #ffff66; box-shadow: 8px 3px 15px #ffff66; transform: rotate(194deg);}
-.speed_indicator10{ background-color: #ffffff; box-shadow: 8px 3px 15px #ffffff; transform: rotate(178deg);}
+.speed_indicator2 { background-color: #661100; box-shadow: 8px 3px 15px #661100; transform: rotate(302deg); transition: 1s;}
+.speed_indicator3 { background-color: #993300; box-shadow: 8px 3px 15px #993300; transform: rotate(287deg); transition: 1s;}
+.speed_indicator4 { background-color: #cc4400; box-shadow: 8px 3px 15px #cc4400; transform: rotate(272deg); transition: 1s;}
+.speed_indicator5 { background-color: #ff5500; box-shadow: 8px 3px 15px #ff5500; transform: rotate(257deg); transition: 1s;}
+.speed_indicator6 { background-color: #ff7700; box-shadow: 8px 3px 15px #ff7700; transform: rotate(242deg); transition: 1s;}
+.speed_indicator7 { background-color: #ffaa00; box-shadow: 8px 3px 15px #ffaa00; transform: rotate(226deg); transition: 1s;}
+.speed_indicator8 { background-color: #ffdd00; box-shadow: 8px 3px 15px #ffdd00; transform: rotate(210deg); transition: 1s;}
+.speed_indicator9 { background-color: #ffff66; box-shadow: 8px 3px 15px #ffff66; transform: rotate(194deg); transition: 1s;}
+.speed_indicator10{ background-color: #ffffff; box-shadow: 8px 3px 15px #ffffff; transform: rotate(178deg); transition: 1s;}
 
-.speed_indicator9- { background-color: #e0f7fa; box-shadow: 8px 3px 15px #00c6ff; transform: rotate(163deg);}
-.speed_indicator8- { background-color: #a1c4fd; box-shadow: 8px 3px 15px #a1c4fd; transform: rotate(146deg);}
-.speed_indicator7- { background-color: #89f7fe; box-shadow: 8px 3px 15px #89f7fe; transform: rotate(130deg);}
-.speed_indicator6- { background-color: #00b4db; box-shadow: 8px 3px 15px #00b4db; transform: rotate(114deg);}
-.speed_indicator5- { background-color: #6080eb; box-shadow: 8px 3px 15px #6080eb; transform: rotate(100deg);}
-.speed_indicator4- { background-color: #067bdb; box-shadow: 8px 3px 15px #067bdb; transform: rotate(86deg);}
-.speed_indicator3- { background-color: #046bc0; box-shadow: 8px 3px 15px #046bc0; transform: rotate(73deg);}
-.speed_indicator2- { background-color: #396afc; box-shadow: 8px 3px 15px #396afc; transform: rotate(55deg);}
+.speed_indicator9- { background-color: #e0f7fa; box-shadow: 8px 3px 15px #00c6ff; transform: rotate(163deg); transition: 1s;}
+.speed_indicator8- { background-color: #a1c4fd; box-shadow: 8px 3px 15px #a1c4fd; transform: rotate(146deg); transition: 1s;}
+.speed_indicator7- { background-color: #89f7fe; box-shadow: 8px 3px 15px #89f7fe; transform: rotate(130deg); transition: 1s;}
+.speed_indicator6- { background-color: #00b4db; box-shadow: 8px 3px 15px #00b4db; transform: rotate(114deg); transition: 1s;}
+.speed_indicator5- { background-color: #6080eb; box-shadow: 8px 3px 15px #6080eb; transform: rotate(100deg); transition: 1s;}
+.speed_indicator4- { background-color: #067bdb; box-shadow: 8px 3px 15px #067bdb; transform: rotate(86deg); transition: 1s;}
+.speed_indicator3- { background-color: #046bc0; box-shadow: 8px 3px 15px #046bc0; transform: rotate(73deg); transition: 1s;}
+.speed_indicator2- { background-color: #396afc; box-shadow: 8px 3px 15px #396afc; transform: rotate(55deg); transition: 1s;}
 /* .speed_indicator1- { background-color: #2c3e50; box-shadow: 10px 15px 40px #2c3e50; } */
 
 
