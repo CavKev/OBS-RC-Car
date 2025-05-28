@@ -57,11 +57,23 @@ button:hover {
     flex-wrap: wrap;
     gap: 10px;
 }
+.speedometer {
+  background-image: url("images/Screenshot 2025-05-21 213700.png");
+  background-size: contain; /* or cover depending on your design */
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%; /* Let it scale with screen */
+  max-width: 600px; /* Optional: maintain a max size */
+  height: auto; /* Optional if you want it to scale based on content */
+  aspect-ratio: 4 / 3; /* Adjust this based on your image’s aspect ratio */
+}
+
 .speedometer { 
     overflow: visible;
     margin: 25px;
-    width: 600px;
-    height: 450px;
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 4 / 3;
     display: flex;
     flex-direction: column-reverse;
     justify-content: space-between;
@@ -267,55 +279,55 @@ transition: all 0.3s ease-in-out;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Phones (<= 600px) */
 @media (max-width: 600px) {
   .layout-row {
     flex-direction: column;
-    align-items: stretch;
-  }
-
-  button {
-    width: 100%;
-    font-size: 1.2rem;
+    padding: 10px;
   }
 
   .speedometer {
     width: 100%;
+    max-width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+
+  #main_div {
+    padding: 10px;
+  }
+
+  button {
+    width: 100%;
     height: auto;
-    
+    font-size: 20px;
+    padding: 15px;
   }
 }
 
-/* Tablets (600px–1024px) */
+
+
+
+
+
+
+
+
+
+
+
 @media (min-width: 601px) and (max-width: 1024px) {
   .layout-row {
-    flex-direction: row;
     flex-wrap: wrap;
   }
 
   .speedometer {
-    width: 45%;
-    height: auto;
+    width: 48%;
+    aspect-ratio: 4 / 3;
   }
 
   button {
-    width: 40%;
+    width: 45%;
+    font-size: 24px;
   }
 }
 
-/* Desktops (>= 1025px) — your default layout is already fine */
+
