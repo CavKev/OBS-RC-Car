@@ -218,9 +218,6 @@ transition: all 0.3s ease-in-out;
   border: 2px solid red;
 }
 
-
-
-
 #logo{
   margin-bottom: 100px;
   margin-left: 1600px;
@@ -235,49 +232,6 @@ transition: all 0.3s ease-in-out;
 .Speed_box h2 {
     transition: all 0.3s ease-in-out;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @media (max-width: 600px) {
   .layout-row {
@@ -303,17 +257,6 @@ transition: all 0.3s ease-in-out;
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
 @media (min-width: 601px) and (max-width: 1024px) {
   .layout-row {
     flex-wrap: wrap;
@@ -329,5 +272,3 @@ transition: all 0.3s ease-in-out;
     font-size: 24px;
   }
 }
-
-
